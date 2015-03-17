@@ -9,3 +9,7 @@ typedef struct rectangle
   int width, height;
   int color[3] = {0,0,0};
 } Rectangle;
+
+
+Rectangle* rectangle_new(int width, int height);
+void rectangle_free(Rectangle* rect);

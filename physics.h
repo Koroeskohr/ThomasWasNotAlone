@@ -6,3 +6,9 @@ typedef struct Vector2
 {
   float x, y;
 } Vector2;
+
+typedef Vector2 Acceleration;
+typedef Vector2 Speed
+typedef Vector2 Position;
+
+int rectangle_collision(Rectangle* r1, Rectangle* r2);
