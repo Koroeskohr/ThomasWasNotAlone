@@ -1,5 +1,8 @@
 #include "dessinPrimitives.h"
 
+const int PRIM_FILLED = 1;
+const int PRIM_EMPTY = 0;
+
 void dessinCarre(short filled) {
   if (filled) {
     glBegin(GL_QUADS);
@@ -40,11 +43,11 @@ void dessinRepere(){
 
 void dessinCercle(short nbSubdiv, short filled){
   int i;
-  float angle = 2*M_PI*i/nbSubdiv;
   if(!filled){
     glBegin(GL_LINE_STRIP);
       for (i = 0; i < nbSubdiv+1; ++i)
       {
+        float angle = 2*M_PI*i/nbSubdiv;
         glVertex2f( cos(angle), sin(angle) );
       }
     glEnd();
@@ -53,6 +56,7 @@ void dessinCercle(short nbSubdiv, short filled){
       glVertex2f(0,0);
       for (i = 0; i < nbSubdiv+1; ++i)
       {
+        float angle = 2*M_PI*i/nbSubdiv;
         glVertex2f( cos(angle), sin(angle) );
       }
     glEnd();

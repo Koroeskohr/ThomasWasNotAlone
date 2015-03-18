@@ -2,26 +2,24 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
 
-static const unsigned int BIT_PER_PIXEL = 32;
-static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
+
+#include "windowManager.h"
+#include "physics.h"
+#include "dessinPrimitives.h"
+#include "player.h"
+#include "rectangle.h"
+
+
 
 int main(int argc, char** argv) {
 
   unsigned int windowWidth  = 1280;
   unsigned int windowHeight = 720;
+  const unsigned int BIT_PER_PIXEL = 32;
+  const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
-
-  if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
-    fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
-    return EXIT_FAILURE;
-  }
-   
-  setVideoMode(windowWidth, windowHeight);
-
-  SDL_WM_SetCaption("Thomas Is Not Alone", NULL);
+  initWindow(windowWidth, windowHeight, BIT_PER_PIXEL);
 
   int loop = 1;
   while(loop) {
@@ -63,7 +61,7 @@ int main(int argc, char** argv) {
         case SDL_VIDEORESIZE:
           windowWidth  = e.resize.w;
           windowHeight = e.resize.h;
-          setVideoMode(windowWidth,windowHeight);
+          setVideoMode(windowWidth,windowHeight, BIT_PER_PIXEL);
           break;
 
         default:

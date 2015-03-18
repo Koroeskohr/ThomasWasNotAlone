@@ -7,10 +7,21 @@ void reshape(int winWidth, int winHeight) {
   gluOrtho2D(-250., 250., -250., 250.); //modifie la matrice projection
 }
 
-void setVideoMode(int winWidth, int winHeight) {
+void setVideoMode(int winWidth, int winHeight, const int BIT_PER_PIXEL) {
   if(NULL == SDL_SetVideoMode(winWidth, winHeight, BIT_PER_PIXEL, SDL_OPENGL | SDL_RESIZABLE)) {
     fprintf(stderr, "Impossible d'ouvrir la fenetre. Fin du programme.\n");
     exit(EXIT_FAILURE);
   }
   reshape(winWidth,winHeight);
+}
+
+void initWindow(int windowWidth, int windowHeight, const int BIT_PER_PIXEL){
+  if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
+    fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
+    exit(EXIT_FAILURE);
+  }
+   
+  setVideoMode(windowWidth, windowHeight, BIT_PER_PIXEL);
+
+  SDL_WM_SetCaption("Thomas Is Not Alone", NULL);
 }
