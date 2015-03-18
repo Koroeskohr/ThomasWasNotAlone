@@ -9,6 +9,7 @@ int rectangle_collision(Rectangle* r1, Rectangle* r2){
   }
 }
 
- //si le x du coin haut gauche de r1 est avant le x du coin haut droit de r2 
-  //et si le x du coin haut droit de r2 est après le x du coin haut gauche de r2
+//si le x du coin haut gauche de r1 est avant le x du coin haut droit de r2 
+//et si le x du coin haut droit de r2 est après le x du coin haut gauche de r2
 //pareil pour le y
+

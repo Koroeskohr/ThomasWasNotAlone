@@ -21,6 +21,21 @@ int main(int argc, char** argv) {
 
   initWindow(windowWidth, windowHeight, BIT_PER_PIXEL);
 
+  /* Initialisation du jeu */
+  Player* player = player_new();
+  player->rects[0]->x = -50;
+  player->rects[0]->y = -50;
+
+  player->rects[1]->x = 60;
+  player->rects[1]->y = 60;
+
+  player->rects[2]->x = -30;
+  player->rects[2]->y = 60;
+
+
+  //tab de ptrs d'objets soumis à la physique
+  //void** physicsables = 
+
   int loop = 1;
   while(loop) {
 
@@ -35,7 +50,12 @@ int main(int argc, char** argv) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-
+    glColor3ub(255,0,0);
+    rectangle_draw(player->rects[0]);
+    glColor3ub(0,234,0);
+    rectangle_draw(player->rects[1]);
+    glColor3ub(0,0,223);
+    rectangle_draw(player->rects[2]);
 
 
     SDL_GL_SwapBuffers();

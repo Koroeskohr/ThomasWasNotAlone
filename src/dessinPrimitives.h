@@ -6,6 +6,10 @@
 #include <math.h>
 
 
+#define PRIM_FILLED 1
+#define PRIM_EMPTY 0
+
+
 
 void dessinCarre(short filled);
 void dessinRepere();

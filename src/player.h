@@ -7,10 +7,11 @@
 
 typedef struct player
 {
-  Rectangle* players[3];
+  Rectangle* rects[3];
 } Player;
 
 Player* player_new();
+void player_free();
 
 void moveTo(Rectangle* player, Vector2 movement);
 

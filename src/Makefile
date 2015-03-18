@@ -14,7 +14,6 @@ thomas: $(OBJ)
 	$(CC) -o $@ -c $< $(CFLAGS)
 
 
-
 clean:
 	rm -rf *.o
 
