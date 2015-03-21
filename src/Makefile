@@ -11,7 +11,7 @@ thomas: $(OBJ)
 	$(CC) -o $@ $^ $(LIB)
 
 %.o: %.c
-	$(CC) -o $@ -c $< $(CFLAGS)
+	$(CC) -o obj/$@ -c $< $(CFLAGS)
 
 
 clean:

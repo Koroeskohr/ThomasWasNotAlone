@@ -12,6 +12,8 @@ typedef struct rectangle
 {
   float x, y;
   float width, height;
+  int top, right, bottom, left;
+
 } Rectangle;
 
 

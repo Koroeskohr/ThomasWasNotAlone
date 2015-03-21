@@ -33,6 +33,8 @@ int main(int argc, char** argv) {
   player->rects[2]->y = 60;
 
 
+  
+
   //tab de ptrs d'objets soumis à la physique
   //void** physicsables = 
 

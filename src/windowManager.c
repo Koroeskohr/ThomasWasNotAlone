@@ -4,7 +4,7 @@ void reshape(int winWidth, int winHeight) {
   glViewport(0, 0, winWidth, winHeight);
   glMatrixMode(GL_PROJECTION); //MODELVIEW -> déplacer les objets, caméras, PROJECTION -> gestion des optiques (Zooms, focale, etc)
   glLoadIdentity(); //applique la matrice identité sur la matrice courante
-  gluOrtho2D(-250., 250., -250., 250.); //modifie la matrice projection
+  gluOrtho2D(-250., 250., -250./1.6, 250./1.6); //modifie la matrice projection
 
   /// TODO : faire en sorte qu'il n'y ait pas de déformation
 }
