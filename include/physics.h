@@ -4,19 +4,14 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <math.h>
-#include "rectangle.h"
+#include "player.h"
+#include "vector.h"
 
-typedef struct Vector2
-{
-  float x, y;
-} Vector2;
-
-typedef struct collision
-{
-} Collision;
-
+#define MAX_SPEED 10
 
 int rectangle_collision(Rectangle* r1, Rectangle* r2);
+void applyGravity(Player* p);
+void applyMovementFromSpeed(Player* p);
 
 int collision_under(Rectangle* r1, Rectangle* r2);
 

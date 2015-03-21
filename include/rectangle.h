@@ -7,18 +7,23 @@
 #include <math.h>
 #include "dessinPrimitives.h"
 
-
 typedef struct rectangle
 {
   float x, y;
   float width, height;
-  int top, right, bottom, left;
-
 } Rectangle;
 
 
-Rectangle* rectangle_new(int width, int height);
-void rectangle_free(Rectangle* rect);
+Rectangle* rectangle_new(float x, float y, int width, int height);
+
+
+
+Rectangle** rectangle_generateArray(int n);
 void rectangle_draw(Rectangle* rect);
+
+
+
+
+void rectangle_free(Rectangle* rect);
 
 #endif

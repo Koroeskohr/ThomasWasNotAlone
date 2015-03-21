@@ -2,14 +2,10 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <stdlib.h>
-
-
+#include <stdio.h> //debug
 #include "windowManager.h"
 #include "physics.h"
-#include "dessinPrimitives.h"
 #include "player.h"
-#include "rectangle.h"
-
 
 
 int main(int argc, char** argv) {
@@ -20,23 +16,24 @@ int main(int argc, char** argv) {
   const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
   initWindow(windowWidth, windowHeight, BIT_PER_PIXEL);
-
   /* Initialisation du jeu */
-  Player* player = player_new();
-  player->rects[0]->x = -50;
-  player->rects[0]->y = -50;
+  int nb_chrs = 3
+  Player* player = player_new(nb_chrs);
 
-  player->rects[1]->x = 60;
-  player->rects[1]->y = 60;
+  int currentChr = 0;
 
-  player->rects[2]->x = -30;
-  player->rects[2]->y = 60;
+  player->characters[0] = character_new(-100, 0, 10, 30);
+  player->characters[1] = character_new(0, 0, 10, 30);
+  player->characters[2] = character_new(100, 0, 10, 30);
+
 
 
   
+  Rectangle** decorArray = rectangle_generateArray(2);
+  decorArray[0] = rectangle_new(0, -200, 500, 200);
+  decorArray[1] = rectangle_new(-200, 0, 20, 300);
 
-  //tab de ptrs d'objets soumis à la physique
-  //void** physicsables = 
+  /* Fin de l'initialisation du jeu */
 
   int loop = 1;
   while(loop) {
@@ -52,13 +49,24 @@ int main(int argc, char** argv) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    
     glColor3ub(255,0,0);
-    rectangle_draw(player->rects[0]);
+    character_draw(player->characters[0]);
     glColor3ub(0,234,0);
-    rectangle_draw(player->rects[1]);
+    character_draw(player->characters[1]);
     glColor3ub(0,0,223);
-    rectangle_draw(player->rects[2]);
+    character_draw(player->characters[2]);
+    
 
+    glColor3ub(255,255,255);
+    rectangle_draw(decorArray[0]);
+    rectangle_draw(decorArray[1]);
+    
+
+
+    applyGravity(player);
+    applyMovementFromSpeed(player);
+    
 
     SDL_GL_SwapBuffers();
     ///////////////////////////////////////////////////
@@ -85,6 +93,12 @@ int main(int argc, char** argv) {
           windowHeight = e.resize.h;
           setVideoMode(windowWidth,windowHeight, BIT_PER_PIXEL);
           break;
+
+        case SDL_KEYDOWN:
+          if(e.key.keysym.sym == SDLK_SHIFT){
+            currentChr += 1;
+            currentChr = currentChr % nb_chrs;
+          }
 
         default:
           break;

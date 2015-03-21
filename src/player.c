@@ -1,26 +1,22 @@
 #include "player.h"
 
-Player* player_new(){
+Player* player_new(int n){
   Player* p = (Player*) malloc(sizeof(Player));
+  Character** characters = (Character**) malloc(n*sizeof(Character*));
 
-  p->rects[0] = rectangle_new(15,35);
-  p->rects[1] = rectangle_new(12,25);
-  p->rects[2] = rectangle_new(20,20);
+  p->n = n;
+  p->characters = characters;
 
   return p;
 }
 
 void player_free(Player* p) {
   int i = 0;
-  for(i=0;i<3;i++){
-    free(p->rects[i]);
-    p->rects[i] = NULL;
+  for(i=0 ; i < p->n ; i++){
+    character_free(p->characters[i]);
   }
+  free(p->characters);
+  p->characters = NULL;
   free(p);
   p = NULL;
-}
-
-void moveTo(Rectangle* player, Vector2 movement){
-  player->x += movement.x;
-  player->y += movement.y;
 }

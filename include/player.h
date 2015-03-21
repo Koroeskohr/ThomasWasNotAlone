@@ -1,18 +1,22 @@
 #ifndef _PLAYER_H
 #define _PLAYER_H
 
-#include "rectangle.h"
-#include "physics.h"
+#include "vector.h"
+#include "character.h"
 
 
 typedef struct player
 {
-  Rectangle* rects[3];
+  int n;
+  Character** characters;
+
 } Player;
 
-Player* player_new();
+Player* player_new(int n);
 void player_free();
 
-void moveTo(Rectangle* player, Vector2 movement);
+void move(Player* p, Rectangle** decor);
+
+
 
 #endif
