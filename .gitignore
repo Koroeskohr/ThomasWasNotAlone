@@ -1,4 +1,4 @@
 sources.txt
 .tags*
-*.o
-thomas
+bin/*
+obj/*
