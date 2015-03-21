@@ -11,8 +11,6 @@ Character* character_new(float x, float y, int width, int height){
 }
 
 void character_draw(Character* chr) {
-  chr->model->x = chr->pos.x;
-  chr->model->y = chr->pos.y;
   rectangle_draw(chr->model);
 }
 

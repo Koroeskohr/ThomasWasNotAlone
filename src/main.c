@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
 
   initWindow(windowWidth, windowHeight, BIT_PER_PIXEL);
   /* Initialisation du jeu */
-  int nb_chrs = 3
+  int nb_chrs = 3;
   Player* player = player_new(nb_chrs);
 
   int currentChr = 0;
@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
 
   
   Rectangle** decorArray = rectangle_generateArray(2);
-  decorArray[0] = rectangle_new(0, -200, 500, 200);
+  decorArray[0] = rectangle_new(-250, -200, 500, 200);
   decorArray[1] = rectangle_new(-200, 0, 20, 300);
 
   /* Fin de l'initialisation du jeu */
@@ -48,7 +48,6 @@ int main(int argc, char** argv) {
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
     
     glColor3ub(255,0,0);
     character_draw(player->characters[0]);
@@ -65,7 +64,8 @@ int main(int argc, char** argv) {
 
 
     applyGravity(player);
-    applyMovementFromSpeed(player);
+    characterMovement(player->characters[currentChr]);
+    applyMovementFromSpeed(player, decorArray, 2);
     
 
     SDL_GL_SwapBuffers();
@@ -77,7 +77,17 @@ int main(int argc, char** argv) {
     /*
     gérer les appuis longs
      */
-    //Uint8* keystate = SDL_GetKeyState(NULL);
+    Uint8* keystate = SDL_GetKeyState(NULL);
+
+    if(keystate[SDLK_LEFT]){
+      player->characters[currentChr]->acc.x = -0.1;
+    }
+    if(keystate[SDLK_RIGHT]){
+      player->characters[currentChr]->acc.x = 0.1;
+    }
+    if(keystate[SDLK_UP]){
+      //jump
+    }
 
 
     SDL_Event e;
@@ -95,11 +105,17 @@ int main(int argc, char** argv) {
           break;
 
         case SDL_KEYDOWN:
-          if(e.key.keysym.sym == SDLK_SHIFT){
+          if(e.key.keysym.sym == SDLK_LSHIFT){
             currentChr += 1;
             currentChr = currentChr % nb_chrs;
           }
+        break;
 
+        case SDL_KEYUP:
+          if(e.key.keysym.sym == SDLK_LEFT || e.key.keysym.sym == SDLK_RIGHT){
+            player->characters[currentChr]->acc.x = 0;
+            player->characters[currentChr]->speed.x = 0;
+          }
         default:
           break;
       }

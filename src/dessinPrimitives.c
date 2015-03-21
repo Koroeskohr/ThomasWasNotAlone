@@ -4,24 +4,18 @@
 void dessinCarre(short filled) {
   if (filled) {
     glBegin(GL_QUADS);
-      glVertex2f(-.5, .5);
-      glVertex2f(.5, .5);
-      glVertex2f(.5, -.5);
-      glVertex2f(-.5, -.5);
+      glVertex2f(0, 0);
+      glVertex2f(0, 1);
+      glVertex2f(1, 1);
+      glVertex2f(1, 0);
     glEnd();
   } else {
-    glBegin(GL_LINES);
-      glVertex2f(-.5, .5);
-      glVertex2f(.5, .5);
-
-      glVertex2f(.5, .5);
-      glVertex2f(.5, -.5);
-
-      glVertex2f(.5, -.5);
-      glVertex2f(-.5, -.5);
-
-      glVertex2f(-.5, -.5);
-      glVertex2f(-.5, .5);
+    glBegin(GL_LINE_STRIP);
+      glVertex2f(0, 0);
+      glVertex2f(0, 1);
+      glVertex2f(1, 1);
+      glVertex2f(1, 0);
+      glVertex2f(0, 0);
     glEnd();
   }
 }

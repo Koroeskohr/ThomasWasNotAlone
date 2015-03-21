@@ -17,23 +17,35 @@ int rectangle_collision(Rectangle* r1, Rectangle* r2){
 void applyGravity(Player* p){
   int i;
   for(i=0; i < p->n; i++){
-    p->characters[i]->speed = sumVector2(p->characters[i]->speed, p->characters[i]->acc);
-    if(fabs(p->characters[i]->speed.x) > MAX_SPEED){
-      p->characters[i]->speed.x = p->characters[i]->speed.x > 0 ? MAX_SPEED : -MAX_SPEED;
-    }
+    p->characters[i]->speed.y += p->characters[i]->acc.y;
     if(fabs(p->characters[i]->speed.y) > MAX_SPEED){
       p->characters[i]->speed.y = p->characters[i]->speed.y > 0 ? MAX_SPEED : -MAX_SPEED;
     }
   }
 }
 
-void applyMovementFromSpeed(Player* p){
-  int i;
-  for(i=0; i < p->n; i++){
-    Vector2 futurePos = sumVector2(p->characters[i]->pos, p->characters[i]->speed);
+void characterMovement(Character* chr){
+  chr->speed.x += chr->acc.x;
+  if(fabs(chr->speed.x) > MAX_SPEED){
+    chr->speed.x = chr->speed.x > 0 ? MAX_SPEED : -MAX_SPEED;
+  }
+}
 
+void applyMovementFromSpeed(Player* p, Rectangle** rectArray, int size){
+  int i,j;
+  for(i=0; i < p->n; ++i){
 
-    p->characters[i]->pos = futurePos;
+    p->characters[i]->pos = sumVector2(p->characters[i]->pos, p->characters[i]->speed);
+    //check collisions
+    for (j = 0; j < size; ++j)
+    {
+      if(rectangle_collision(p->characters[i]->model, rectArray[j])){
+        p->characters[i]->pos.y += rectArray[j]->y - p->characters[i]->pos.y;
+      }
+    }
+
+    p->characters[i]->model->x = p->characters[i]->pos.x;
+    p->characters[i]->model->y = p->characters[i]->pos.y;
   }
 }
 
