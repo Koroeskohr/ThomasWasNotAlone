@@ -3,7 +3,7 @@
 Character* character_new(float x, float y, int width, int height){
   Character* chr = (Character*)malloc(sizeof(Character));
   chr->model = rectangle_new(x, y, width, height);
-  chr->acc = vector2(0,-0.1);
+  chr->acc = vector2(0, -0.2);
   chr->speed = vector2(0, 0);
   chr->pos = vector2(x,y);
 

@@ -31,6 +31,10 @@ void characterMovement(Character* chr){
   }
 }
 
+void jump(Character* chr){
+  chr->speed.y = 5;
+}
+
 void applyMovementFromSpeed(Player* p, Rectangle** rectArray, int size){
   int i,j;
   for(i=0; i < p->n; ++i){
@@ -39,8 +43,9 @@ void applyMovementFromSpeed(Player* p, Rectangle** rectArray, int size){
     //check collisions
     for (j = 0; j < size; ++j)
     {
-      if(rectangle_collision(p->characters[i]->model, rectArray[j])){
-        p->characters[i]->pos.y += rectArray[j]->y - p->characters[i]->pos.y;
+      if(collision_under(p->characters[i]->model, rectArray[j])){
+        p->characters[i]->pos.y = rectArray[j]->y + rectArray[j]->height;
+        p->characters[i]->speed.y = 0;
       }
     }
 
@@ -51,11 +56,14 @@ void applyMovementFromSpeed(Player* p, Rectangle** rectArray, int size){
 
 
 
-// int collision_under(Rectangle* r1, Rectangle* r2){
-// 	if(r1->y+r1->height <= r2->y){
-
-// 	}
-// }
+int collision_under(Rectangle* r1, Rectangle* r2){
+	if(r1->y >= r2->y + r2->height - 10 && rectangle_collision(r1, r2)){
+    return 1;
+	}
+  else {
+    return 0;
+  }
+}
 
 // int process_collision(Rectangle** list, Rectangle* r1){
 // 	int i = 0;

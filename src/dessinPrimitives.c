@@ -12,8 +12,8 @@ void dessinCarre(short filled) {
   } else {
     glBegin(GL_LINE_STRIP);
       glVertex2f(0, 0);
-      glVertex2f(0, 1);
-      glVertex2f(1, 1);
+      glVertex2f(0, -1);
+      glVertex2f(1, -1);
       glVertex2f(1, 0);
       glVertex2f(0, 0);
     glEnd();
@@ -31,6 +31,12 @@ void dessinRepere(){
     glVertex2f(1, 0);
   glEnd();
   glColor3ub(255,255,255);
+}
+
+void dessinPoint(float x, float y){
+  glBegin(GL_POINTS);
+    glVertex2f(x,y);
+  glEnd();
 }
 
 void dessinCercle(short nbSubdiv, short filled){

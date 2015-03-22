@@ -16,6 +16,9 @@ int main(int argc, char** argv) {
   const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
   initWindow(windowWidth, windowHeight, BIT_PER_PIXEL);
+  glPointSize(5);
+
+
   /* Initialisation du jeu */
   int nb_chrs = 3;
   Player* player = player_new(nb_chrs);
@@ -30,8 +33,11 @@ int main(int argc, char** argv) {
 
   
   Rectangle** decorArray = rectangle_generateArray(2);
-  decorArray[0] = rectangle_new(-250, -200, 500, 200);
-  decorArray[1] = rectangle_new(-200, 0, 20, 300);
+  decorArray[0] = rectangle_new(-150, -200, 500, 200);
+  
+
+  decorArray[1] = rectangle_new(-200, 100, 20, 150);
+  
 
   /* Fin de l'initialisation du jeu */
 
@@ -48,6 +54,10 @@ int main(int argc, char** argv) {
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+
+    glColor3ub(255,255,255);
+    rectangle_draw(decorArray[0]);
+    rectangle_draw(decorArray[1]);
     
     glColor3ub(255,0,0);
     character_draw(player->characters[0]);
@@ -56,11 +66,20 @@ int main(int argc, char** argv) {
     glColor3ub(0,0,223);
     character_draw(player->characters[2]);
     
+    glColor3ub(255,0,0);
+    dessinPoint(decorArray[0]->x, decorArray[0]->y);
+    glColor3ub(0,0,255);
+    dessinPoint(decorArray[0]->x, decorArray[0]->y + decorArray[0]->height);
 
-    glColor3ub(255,255,255);
-    rectangle_draw(decorArray[0]);
-    rectangle_draw(decorArray[1]);
-    
+    glColor3ub(255,0,0);
+    dessinPoint(decorArray[1]->x, decorArray[1]->y);
+    glColor3ub(1,1,255);
+    dessinPoint(decorArray[1]->x, decorArray[1]->y + decorArray[1]->height);
+
+    glColor3ub(255,0,0);
+    dessinPoint(player->characters[0]->model->x, player->characters[0]->model->y);
+    glColor3ub(1,1,255);
+    dessinPoint(player->characters[0]->model->x, player->characters[0]->model->y + player->characters[0]->model->height);
 
 
     applyGravity(player);
@@ -85,9 +104,6 @@ int main(int argc, char** argv) {
     if(keystate[SDLK_RIGHT]){
       player->characters[currentChr]->acc.x = 0.1;
     }
-    if(keystate[SDLK_UP]){
-      //jump
-    }
 
 
     SDL_Event e;
@@ -109,6 +125,9 @@ int main(int argc, char** argv) {
             currentChr += 1;
             currentChr = currentChr % nb_chrs;
           }
+          if(e.key.keysym.sym == SDLK_SPACE){
+            jump(player->characters[currentChr]);
+          }
         break;
 
         case SDL_KEYUP:
@@ -116,6 +135,8 @@ int main(int argc, char** argv) {
             player->characters[currentChr]->acc.x = 0;
             player->characters[currentChr]->speed.x = 0;
           }
+          break;
+
         default:
           break;
       }

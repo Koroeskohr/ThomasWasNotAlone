@@ -13,6 +13,8 @@ int rectangle_collision(Rectangle* r1, Rectangle* r2);
 void applyGravity(Player* p);
 void characterMovement(Character* chr);
 void applyMovementFromSpeed(Player* p, Rectangle** rectArray, int size);
+void jump(Character* chr);
+
 
 int collision_under(Rectangle* r1, Rectangle* r2);
 

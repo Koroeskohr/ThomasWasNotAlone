@@ -14,5 +14,6 @@
 void dessinCarre(short filled);
 void dessinRepere();
 void dessinCercle(short nbSubdiv, short filled);
+void dessinPoint(float x, float y);
 
 #endif
