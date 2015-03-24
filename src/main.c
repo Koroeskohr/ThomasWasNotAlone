@@ -3,9 +3,12 @@
 #include <GL/glu.h>
 #include <stdlib.h>
 #include <stdio.h> //debug
+#include <string.h>
 #include "windowManager.h"
 #include "physics.h"
 #include "player.h"
+
+
 
 
 int main(int argc, char** argv) {
@@ -65,22 +68,6 @@ int main(int argc, char** argv) {
     character_draw(player->characters[1]);
     glColor3ub(0,0,223);
     character_draw(player->characters[2]);
-    
-    glColor3ub(255,0,0);
-    dessinPoint(decorArray[0]->x, decorArray[0]->y);
-    glColor3ub(0,0,255);
-    dessinPoint(decorArray[0]->x, decorArray[0]->y + decorArray[0]->height);
-
-    glColor3ub(255,0,0);
-    dessinPoint(decorArray[1]->x, decorArray[1]->y);
-    glColor3ub(1,1,255);
-    dessinPoint(decorArray[1]->x, decorArray[1]->y + decorArray[1]->height);
-
-    glColor3ub(255,0,0);
-    dessinPoint(player->characters[0]->model->x, player->characters[0]->model->y);
-    glColor3ub(1,1,255);
-    dessinPoint(player->characters[0]->model->x, player->characters[0]->model->y + player->characters[0]->model->height);
-
 
     applyGravity(player);
     characterMovement(player->characters[currentChr]);

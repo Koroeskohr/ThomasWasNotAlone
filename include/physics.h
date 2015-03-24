@@ -16,7 +16,9 @@ void applyMovementFromSpeed(Player* p, Rectangle** rectArray, int size);
 void jump(Character* chr);
 
 
-int collision_under(Rectangle* r1, Rectangle* r2);
+int collision_under(Character* chr, Rectangle* bg);
+int collision_sides(Character* chr, Rectangle* bg);
+int collision_above(Character* chr, Rectangle* bg);
 
 
 #endif

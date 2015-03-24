@@ -14,6 +14,8 @@ typedef struct character
   Vector2 speed;
   Vector2 pos;
 
+  int grounded;
+
 } Character;
 
 

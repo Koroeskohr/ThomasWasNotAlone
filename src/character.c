@@ -6,6 +6,7 @@ Character* character_new(float x, float y, int width, int height){
   chr->acc = vector2(0, -0.2);
   chr->speed = vector2(0, 0);
   chr->pos = vector2(x,y);
+  chr->grounded = 0;
 
   return chr;
 }

@@ -15,12 +15,16 @@ void rectangle_free(Rectangle* rect){
 }
 
 void rectangle_draw(Rectangle* rect){
-  // incomplet, le rectangle est dessiné depuis l'origine
   glPushMatrix();
     glTranslatef(rect->x, rect->y, 0);
     glScalef(rect->width, rect->height, 1);
     dessinCarre(PRIM_FILLED);
   glPopMatrix();
+  
+  glColor3ub(255,0,0);
+  dessinPoint(rect->x, rect->y);
+  glColor3ub(0,0,255);
+  dessinPoint(rect->x, rect->y + rect->height);
 }
 
 Rectangle** rectangle_generateArray(int n){
