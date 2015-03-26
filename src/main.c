@@ -21,24 +21,17 @@ int main(int argc, char** argv) {
   initWindow(windowWidth, windowHeight, BIT_PER_PIXEL);
   glPointSize(5);
 
-
   /* Initialisation du jeu */
   int nb_chrs = 3;
   Player* player = player_new(nb_chrs);
 
   int currentChr = 0;
-
   player->characters[0] = character_new(-100, 0, 10, 30);
   player->characters[1] = character_new(0, 0, 10, 30);
   player->characters[2] = character_new(100, 0, 10, 30);
 
-
-
-  
   Rectangle** decorArray = rectangle_generateArray(2);
   decorArray[0] = rectangle_new(-150, -200, 500, 200);
-  
-
   decorArray[1] = rectangle_new(-200, 100, 20, 150);
   
 
@@ -58,6 +51,16 @@ int main(int argc, char** argv) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+    
+
+    characterMovement(player->characters[currentChr]);
+    applyGravity(player);
+    applyMovementFromSpeed(player, decorArray, 2);
+
+
+
+    printf("pos x %f y %f speed x %f y %f\n", player->characters[currentChr]->pos.x,player->characters[currentChr]->pos.y, player->characters[currentChr]->speed.x,player->characters[currentChr]->speed.y);
+
     glColor3ub(255,255,255);
     rectangle_draw(decorArray[0]);
     rectangle_draw(decorArray[1]);
@@ -68,10 +71,6 @@ int main(int argc, char** argv) {
     character_draw(player->characters[1]);
     glColor3ub(0,0,223);
     character_draw(player->characters[2]);
-
-    applyGravity(player);
-    characterMovement(player->characters[currentChr]);
-    applyMovementFromSpeed(player, decorArray, 2);
     
 
     SDL_GL_SwapBuffers();
@@ -109,6 +108,7 @@ int main(int argc, char** argv) {
 
         case SDL_KEYDOWN:
           if(e.key.keysym.sym == SDLK_LSHIFT){
+            player->characters[currentChr]->speed.x = 0;
             currentChr += 1;
             currentChr = currentChr % nb_chrs;
           }

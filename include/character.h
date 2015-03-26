@@ -15,6 +15,7 @@ typedef struct character
   Vector2 pos;
 
   int grounded;
+  int jumping;
 
 } Character;
 
