@@ -25,6 +25,7 @@ void rectangle_draw(Rectangle* rect, int filled){
   dessinPoint(rect->x, rect->y);
   glColor3ub(0,0,255);
   dessinPoint(rect->x, rect->y + rect->height);
+  glColor3ub(255,255,255);
 }
 
 Rectangle** rectangle_generateArray(int n){

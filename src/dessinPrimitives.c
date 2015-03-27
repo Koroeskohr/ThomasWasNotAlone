@@ -12,8 +12,8 @@ void dessinCarre(short filled) {
   } else {
     glBegin(GL_LINE_STRIP);
       glVertex2f(0, 0);
-      glVertex2f(0, -1);
-      glVertex2f(1, -1);
+      glVertex2f(0, 1);
+      glVertex2f(1, 1);
       glVertex2f(1, 0);
       glVertex2f(0, 0);
     glEnd();

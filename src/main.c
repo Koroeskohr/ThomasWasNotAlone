@@ -7,8 +7,8 @@
 #include "windowManager.h"
 #include "physics.h"
 #include "player.h"
-
-
+#include "goal.h"
+#include "game.h"
 
 
 int main(int argc, char** argv) {
@@ -21,19 +21,35 @@ int main(int argc, char** argv) {
   initWindow(windowWidth, windowHeight, BIT_PER_PIXEL);
   glPointSize(5);
 
+  int i;
+
   /* Initialisation du jeu */
   int nb_chrs = 3;
+
   Player* player = player_new(nb_chrs);
 
+
+  int chr_info[3][4] = { {-100, 0, 10, 50}, {0, 0, 10, 30}, {100, 0, 10, 20} }; // a changer
+
+  for (i = 0; i < nb_chrs; ++i)
+  {
+    player->characters[i] = character_new(chr_info[i][0],chr_info[i][1],chr_info[i][2],chr_info[i][3]); 
+  }
+
   int currentChr = 0;
-  player->characters[0] = character_new(-100, 0, 10, 30);
-  player->characters[1] = character_new(0, 0, 10, 30);
-  player->characters[2] = character_new(100, 0, 10, 30);
+
+  Goal** goalArray = goal_generateArray(nb_chrs);
+  goalArray[0] = goal_new(0, 0, chr_info[0][2], chr_info[0][3]);
+  goalArray[1] = goal_new(50, 0, chr_info[1][2], chr_info[1][3]);
+  goalArray[2] = goal_new(100, 0, chr_info[2][2], chr_info[2][3]);
+
 
   Rectangle** decorArray = rectangle_generateArray(2);
   decorArray[0] = rectangle_new(-150, -200, 500, 200);
   decorArray[1] = rectangle_new(-200, 100, 20, 150);
-  
+
+
+
 
   /* Fin de l'initialisation du jeu */
 
@@ -71,7 +87,15 @@ int main(int argc, char** argv) {
     character_draw(player->characters[1]);
     glColor3ub(0,0,223);
     character_draw(player->characters[2]);
+
+    glColor3ub(255,255,255);
+    goal_draw(goalArray[0]);
+    goal_draw(goalArray[1]);
+    goal_draw(goalArray[2]);
     
+    if(isGameWon(player, goalArray)){
+      player->characters[0]->model->width = 200;
+    }
 
     SDL_GL_SwapBuffers();
     ///////////////////////////////////////////////////
