@@ -9,6 +9,7 @@
 #include "player.h"
 #include "goal.h"
 #include "game.h"
+#include "camera.h"
 
 
 int main(int argc, char** argv) {
@@ -70,15 +71,15 @@ int main(int argc, char** argv) {
     ///////////////////////////////////////////////////
     
     glClear(GL_COLOR_BUFFER_BIT);
+
+    setCamera(getMinMax(player));
+
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
-    
 
     characterMovement(player->characters[currentChr]);
     applyGravity(player);
     applyMovementFromSpeed(player, decorArray, 2);
-
 
 
     printf("pos x %f y %f speed x %f y %f\n", player->characters[currentChr]->pos.x,player->characters[currentChr]->pos.y, player->characters[currentChr]->speed.x,player->characters[currentChr]->speed.y);
