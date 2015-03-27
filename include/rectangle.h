@@ -19,7 +19,7 @@ Rectangle* rectangle_new(float x, float y, int width, int height);
 
 
 Rectangle** rectangle_generateArray(int n);
-void rectangle_draw(Rectangle* rect);
+void rectangle_draw(Rectangle* rect, int filled);
 
 
 

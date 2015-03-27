@@ -62,8 +62,8 @@ int main(int argc, char** argv) {
     printf("pos x %f y %f speed x %f y %f\n", player->characters[currentChr]->pos.x,player->characters[currentChr]->pos.y, player->characters[currentChr]->speed.x,player->characters[currentChr]->speed.y);
 
     glColor3ub(255,255,255);
-    rectangle_draw(decorArray[0]);
-    rectangle_draw(decorArray[1]);
+    rectangle_draw(decorArray[0], PRIM_FILLED);
+    rectangle_draw(decorArray[1], PRIM_FILLED);
     
     glColor3ub(255,0,0);
     character_draw(player->characters[0]);

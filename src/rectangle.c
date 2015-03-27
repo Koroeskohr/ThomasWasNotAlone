@@ -14,11 +14,11 @@ void rectangle_free(Rectangle* rect){
   rect = NULL;
 }
 
-void rectangle_draw(Rectangle* rect){
+void rectangle_draw(Rectangle* rect, int filled){
   glPushMatrix();
     glTranslatef(rect->x, rect->y, 0);
     glScalef(rect->width, rect->height, 1);
-    dessinCarre(PRIM_FILLED);
+    dessinCarre(filled);
   glPopMatrix();
   
   glColor3ub(255,0,0);
