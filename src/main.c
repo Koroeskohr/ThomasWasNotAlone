@@ -25,26 +25,32 @@ int main(int argc, char** argv) {
 
   /* Initialisation du jeu */
   int nb_chrs = 3;
-
   Player* player = player_new(nb_chrs);
 
-
+  //info sur les character et les Goal
+  /// TODO : lire depuis un fichier
   int chr_info[3][4] = { {-100, 0, 10, 50}, {0, 0, 10, 30}, {100, 0, 10, 20} }; // a changer
 
+  //init des characters
   for (i = 0; i < nb_chrs; ++i)
   {
     player->characters[i] = character_new(chr_info[i][0],chr_info[i][1],chr_info[i][2],chr_info[i][3]); 
   }
 
+  //définition du chr courant
   int currentChr = 0;
 
+  //init des Goal
   Goal** goalArray = goal_generateArray(nb_chrs);
+  //remplissage du tableau de goal avec les infos des character
   goalArray[0] = goal_new(0, 0, chr_info[0][2], chr_info[0][3]);
   goalArray[1] = goal_new(50, 0, chr_info[1][2], chr_info[1][3]);
   goalArray[2] = goal_new(100, 0, chr_info[2][2], chr_info[2][3]);
 
-
+  //init du tableau des décors tangibles
   Rectangle** decorArray = rectangle_generateArray(2);
+  //remplissage du tableau avec des éléments
+  /// TODO : lire depuis un fichier
   decorArray[0] = rectangle_new(-150, -200, 500, 200);
   decorArray[1] = rectangle_new(-200, 100, 20, 150);
 
