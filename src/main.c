@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
     
     glClear(GL_COLOR_BUFFER_BIT);
 
-    setCamera(getMinMax(player));
+    setCamera(player->characters[currentChr]->pos);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
