@@ -15,7 +15,6 @@ typedef struct player
 Player* player_new(int n);
 void player_free();
 
-void move(Player* p, Rectangle** decor);
 
 
 

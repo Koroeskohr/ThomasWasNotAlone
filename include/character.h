@@ -23,7 +23,7 @@ typedef struct character
 Character* character_new(float x, float y, int width, int height);
 
 void character_draw(Character* chr);
-
+Character** character_generateArray(int n);
 
 void character_free(Character* chr);
 

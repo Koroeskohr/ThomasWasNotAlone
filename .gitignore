@@ -1,4 +1,4 @@
-sources.txt
+*.txt
 .tags*
 bin/*
 obj/*

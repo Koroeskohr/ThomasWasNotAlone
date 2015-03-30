@@ -16,6 +16,11 @@ void character_draw(Character* chr) {
   rectangle_draw(chr->model, PRIM_FILLED);
 }
 
+Character** character_generateArray(int n){
+  Character** chrArray = (Character**)malloc(n*sizeof(Character*));
+  return chrArray;
+}
+
 
 void character_free(Character* chr){
   free(chr->model);
