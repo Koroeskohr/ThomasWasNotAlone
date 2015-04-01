@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h> //debug
 #include <string.h>
+
 #include "windowManager.h"
 #include "physics.h"
 #include "player.h"
@@ -21,27 +22,28 @@ int main(int argc, char** argv) {
   const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
   initWindow(windowWidth, windowHeight, BIT_PER_PIXEL);
-  glPointSize(5);
+  glPointSize(5); //debug
 
-  //int i;
+  int i;
 
   /* Initialisation du jeu */
   GameData gameData = gameData_decode("level1.lvl");
 
   int nb_chrs = gameData.chrAmount;
-  Player* player = player_new(nb_chrs);
+  int nb_decor = gameData.decorAmount;
+  Player* player = player_new(nb_chrs); //to free
 
   //init des characters
-  player->characters = gameData.chrArray;
+  player->characters = gameData.chrArray; // to free
 
   //définition du chr courant
   int currentChr = 0;
 
   //init des Goal
-  Goal** goalArray = gameData.goalArray;
+  Goal** goalArray = gameData.goalArray; //to free
 
   //init du tableau des décors tangibles
-  Rectangle** decorArray = gameData.decorArray; 
+  Rectangle** decorArray = gameData.decorArray; //to free
 
 
 
@@ -63,29 +65,26 @@ int main(int argc, char** argv) {
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
     characterMovement(player->characters[currentChr]);
     applyGravity(player);
     applyMovementFromSpeed(player, decorArray, 2);
 
 
     //printf("pos x %f y %f speed x %f y %f\n", player->characters[currentChr]->pos.x,player->characters[currentChr]->pos.y, player->characters[currentChr]->speed.x,player->characters[currentChr]->speed.y);
+    /// TODO : fonction pour dessiner chaque ensemble d'elements
+    glColor3ub(255,255,255);
+    for(i=0; i < nb_decor; ++i){
+      rectangle_draw(decorArray[i], PRIM_FILLED); //rajouter une délégation pour le décor ?
+    }
+
+    for(i=0; i < nb_chrs; ++i){
+      character_draw(player->characters[i], i);
+    }
 
     glColor3ub(255,255,255);
-    rectangle_draw(decorArray[0], PRIM_FILLED);
-    rectangle_draw(decorArray[1], PRIM_FILLED);
-    
-    glColor3ub(255,0,0);
-    character_draw(player->characters[0]);
-    glColor3ub(0,234,0);
-    character_draw(player->characters[1]);
-    glColor3ub(0,0,223);
-    character_draw(player->characters[2]);
-
-    glColor3ub(255,255,255);
-    goal_draw(goalArray[0]);
-    goal_draw(goalArray[1]);
-    goal_draw(goalArray[2]);
+    for(i = 0; i < nb_chrs; ++i){
+      goal_draw(goalArray[i]);
+    }
     
     if(isGameWon(player, goalArray)){
       player->characters[0]->model->width = 200;

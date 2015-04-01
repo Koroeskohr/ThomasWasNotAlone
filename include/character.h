@@ -14,6 +14,8 @@ typedef struct character
   Vector2 speed;
   Vector2 pos;
 
+  Color3f color;
+
   int grounded;
   int jumping;
 
@@ -22,9 +24,12 @@ typedef struct character
 
 Character* character_new(float x, float y, int width, int height);
 
-void character_draw(Character* chr);
+void character_draw(Character* chr, short colorId);
 Character** character_generateArray(int n);
 
 void character_free(Character* chr);
+
+extern Color3f BLUE, RED, YELLOW, GREEN, LIGHTGREY;
+extern Color3f colors[5];
 
 #endif

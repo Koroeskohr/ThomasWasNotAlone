@@ -5,8 +5,13 @@ int isGameWon(Player* p, Goal** goalArray){
   int won = 1;
   for (i = 0; i < p->n; ++i)
   {
-    if(!rectangle_collision(p->characters[i]->model, goalArray[i]->model))
+    printf("not won\n");
+    if(!rectangle_collision(p->characters[i]->model, goalArray[i]->model)){
       won = 0;
+      break;
+    }
+
+
   }
 
   return won;

@@ -60,3 +60,7 @@ void dessinCercle(short nbSubdiv, short filled){
     glEnd();
   }
 }
+
+void setColor(Color3f color) {
+  glColor3f(color.r, color.g, color.b);
+}

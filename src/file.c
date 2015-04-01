@@ -56,4 +56,3 @@ GameData gameData_decode(char* level){
 
   return g;
 }
-

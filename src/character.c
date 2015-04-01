@@ -1,5 +1,7 @@
 #include "character.h"
 
+Color3f CHRCOLORS[5] = {{0,0,1}, {1,0,0}, {0,1,1}, {0,1,0}, {0.8, 0.8, 0.8}};
+
 Character* character_new(float x, float y, int width, int height){
   Character* chr = (Character*)malloc(sizeof(Character));
   chr->model = rectangle_new(x, y, width, height);
@@ -12,7 +14,8 @@ Character* character_new(float x, float y, int width, int height){
   return chr;
 }
 
-void character_draw(Character* chr) {
+void character_draw(Character* chr, short colorId) {
+  setColor(CHRCOLORS[colorId]);
   rectangle_draw(chr->model, PRIM_FILLED);
 }
 
@@ -29,3 +32,5 @@ void character_free(Character* chr){
   free(chr);
   chr = NULL;
 }
+
+
