@@ -2,10 +2,7 @@
 
 Player* player_new(int n){
   Player* p = (Player*) malloc(sizeof(Player));
-  Character** characters = character_generateArray(n);
-
   p->n = n;
-  p->characters = characters;
 
   return p;
 }

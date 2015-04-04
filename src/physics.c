@@ -91,6 +91,55 @@ void moveChrWithDecorCollision(Player* p, Rectangle** decorArray, int size){
   }
 }
 
+
+void chrCollision(Player* p){
+  int i,j;
+  int sideCollision;
+
+  for(i=0; i < p->n; ++i){
+    //p->characters[i]->pos = sumVector2(p->characters[i]->pos, p->characters[i]->speed);
+    //check collisions
+    for (j = 0; j < p->n; ++j)
+    {
+      if(i != j){
+        if(collision_above(p->characters[i], p->characters[j]->model)){
+          p->characters[i]->pos.y = p->characters[j]->model->y - p->characters[i]->model->height;
+          p->characters[i]->speed.y = 0;
+        }
+
+        sideCollision = collision_sides(p->characters[i], p->characters[j]->model);
+        if(sideCollision){
+          if(sideCollision == -1){
+            p->characters[i]->pos.x = p->characters[j]->model->x - p->characters[i]->model->width;
+            p->characters[i]->speed.x = 0;
+          }
+          {
+          if (sideCollision == 1)
+            p->characters[i]->pos.x = p->characters[j]->model->x + p->characters[j]->model->width;
+            p->characters[i]->speed.x = 0;
+          }
+        }
+        if(collision_under(p->characters[i], p->characters[j]->model)){
+          p->characters[i]->pos.y = p->characters[j]->model->y + p->characters[j]->model->height;
+          p->characters[i]->grounded = 1;
+          //p->characters[i]->model->width += 0.3; //debug
+          if(!p->characters[i]->jumping){
+            p->characters[i]->speed.y = 0;
+          }
+          else {
+            p->characters[i]->jumping = 0;
+          }
+        }
+      }
+
+    }
+
+    p->characters[i]->model->x = p->characters[i]->pos.x;
+    p->characters[i]->model->y = p->characters[i]->pos.y;
+  }
+}
+
+
 /**
  * Retourne une valeur si le personnage actuel subit une collision sur ses côtés
  * @param  chr Personnage pris en compte
@@ -100,7 +149,7 @@ void moveChrWithDecorCollision(Player* p, Rectangle** decorArray, int size){
 int collision_sides(Character* chr, Rectangle* bg){
   if(chr->acc.x != 0 && rectangle_collision(chr->model, bg) && !collision_under(chr,bg)){
     //si le character est a gauche
-    if(chr->pos.x + chr->model->width < bg->x + 10) 
+    if(chr->pos.x + chr->model->width < bg->x + 10)
     {
       return -1;
     }

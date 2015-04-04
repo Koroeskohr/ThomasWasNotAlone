@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
   //init des characters
   player->characters = gameData.chrArray; // to free
 
-  //définition du chr courant
+  //définition du character actuel
   int currentChr = 0;
 
   //init des Goal
@@ -68,6 +68,7 @@ int main(int argc, char** argv) {
     characterMovement(player, currentChr);
     applyGravity(player);
     moveChrWithDecorCollision(player, decorArray, 2);
+    chrCollision(player);
 
 
     //printf("pos x %f y %f speed x %f y %f\n", player->characters[currentChr]->pos.x,player->characters[currentChr]->pos.y, player->characters[currentChr]->speed.x,player->characters[currentChr]->speed.y);
