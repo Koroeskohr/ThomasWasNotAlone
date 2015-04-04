@@ -65,10 +65,11 @@ int main(int argc, char** argv) {
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    characterMovement(player, currentChr);
     applyGravity(player);
     moveChrWithDecorCollision(player, decorArray, 2);
     chrCollision(player);
+    characterMovement(player, currentChr);
+
 
 
     //printf("pos x %f y %f speed x %f y %f\n", player->characters[currentChr]->pos.x,player->characters[currentChr]->pos.y, player->characters[currentChr]->speed.x,player->characters[currentChr]->speed.y);

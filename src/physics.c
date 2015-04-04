@@ -97,7 +97,6 @@ void chrCollision(Player* p){
   int sideCollision;
 
   for(i=0; i < p->n; ++i){
-    //p->characters[i]->pos = sumVector2(p->characters[i]->pos, p->characters[i]->speed);
     //check collisions
     for (j = 0; j < p->n; ++j)
     {
@@ -105,6 +104,10 @@ void chrCollision(Player* p){
         if(collision_above(p->characters[i], p->characters[j]->model)){
           p->characters[i]->pos.y = p->characters[j]->model->y - p->characters[i]->model->height;
           p->characters[i]->speed.y = 0;
+          p->characters[i]->chrAbove = j;
+        }
+        else{
+          p->characters[i]->chrAbove = -1;
         }
 
         sideCollision = collision_sides(p->characters[i], p->characters[j]->model);
