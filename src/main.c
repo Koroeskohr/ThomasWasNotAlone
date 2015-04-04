@@ -65,13 +65,12 @@ int main(int argc, char** argv) {
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    characterMovement(player->characters[currentChr]);
+    characterMovement(player, currentChr);
     applyGravity(player);
-    applyMovementFromSpeed(player, decorArray, 2);
+    moveChrWithDecorCollision(player, decorArray, 2);
 
 
     //printf("pos x %f y %f speed x %f y %f\n", player->characters[currentChr]->pos.x,player->characters[currentChr]->pos.y, player->characters[currentChr]->speed.x,player->characters[currentChr]->speed.y);
-    /// TODO : fonction pour dessiner chaque ensemble d'elements
     glColor3ub(255,255,255);
     for(i=0; i < nb_decor; ++i){
       rectangle_draw(decorArray[i], PRIM_FILLED); //rajouter une délégation pour le décor ?
@@ -125,9 +124,7 @@ int main(int argc, char** argv) {
 
         case SDL_KEYDOWN:
           if(e.key.keysym.sym == SDLK_LSHIFT){
-            player->characters[currentChr]->speed.x = 0;
-            currentChr += 1;
-            currentChr = currentChr % nb_chrs;
+            nextCharacter(player, &currentChr, nb_chrs);
           }
           if(e.key.keysym.sym == SDLK_SPACE){
             jump(player->characters[currentChr]);

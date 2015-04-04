@@ -19,6 +19,8 @@ typedef struct character
   int grounded;
   int jumping;
 
+  int chrAbove;
+
 } Character;
 
 

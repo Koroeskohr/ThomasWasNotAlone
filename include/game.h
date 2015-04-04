@@ -4,7 +4,7 @@
 #include "physics.h"
 #include "rectangle.h"
 #include "goal.h"
-#include "character.h"
+#include "player.h"
 
 typedef struct gameData
 {
@@ -16,6 +16,7 @@ typedef struct gameData
 } GameData;
 
 int isGameWon(Player* p, Goal** goalArray);
+void nextCharacter(Player* p, int* currentChr, int nb_chrs);
 
 
 #endif

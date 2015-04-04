@@ -11,6 +11,8 @@ Character* character_new(float x, float y, int width, int height){
   chr->grounded = 0;
   chr->jumping = 0;
 
+  chr->chrAbove = -1;
+
   return chr;
 }
 

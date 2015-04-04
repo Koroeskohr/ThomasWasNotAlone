@@ -26,10 +26,15 @@ void applyGravity(Player* p){
   }
 }
 
-void characterMovement(Character* chr){
+void characterMovement(Player *p, int currentChr){
+  Character* chr = p->characters[currentChr];
   chr->speed.x += chr->acc.x;
   if(fabs(chr->speed.x) > MAX_SPEED){
     chr->speed.x = chr->speed.x > 0 ? MAX_SPEED : -MAX_SPEED;
+  }
+
+  if(chr->chrAbove != -1){
+    characterMovement(p, chr->chrAbove);
   }
 }
 
@@ -42,7 +47,7 @@ void jump(Character* chr){
 
 }
 
-void applyMovementFromSpeed(Player* p, Rectangle** rectArray, int size){
+void moveChrWithDecorCollision(Player* p, Rectangle** decorArray, int size){
   int i,j;
   int sideCollision;
 
@@ -51,25 +56,25 @@ void applyMovementFromSpeed(Player* p, Rectangle** rectArray, int size){
     //check collisions
     for (j = 0; j < size; ++j)
     {
-      if(collision_above(p->characters[i], rectArray[j])){
-        p->characters[i]->pos.y = rectArray[j]->y - p->characters[i]->model->height;
+      if(collision_above(p->characters[i], decorArray[j])){
+        p->characters[i]->pos.y = decorArray[j]->y - p->characters[i]->model->height;
         p->characters[i]->speed.y = 0;
       }
 
-      sideCollision = collision_sides(p->characters[i], rectArray[j]);
+      sideCollision = collision_sides(p->characters[i], decorArray[j]);
       if(sideCollision){
         if(sideCollision == -1){
-          p->characters[i]->pos.x = rectArray[j]->x - p->characters[i]->model->width;
+          p->characters[i]->pos.x = decorArray[j]->x - p->characters[i]->model->width;
           p->characters[i]->speed.x = 0;
         }
         if (sideCollision == 1)
         {
-          p->characters[i]->pos.x = rectArray[j]->x + rectArray[j]->width;
+          p->characters[i]->pos.x = decorArray[j]->x + decorArray[j]->width;
           p->characters[i]->speed.x = 0;
         }
       }
-      if(collision_under(p->characters[i], rectArray[j])){
-        p->characters[i]->pos.y = rectArray[j]->y + rectArray[j]->height;
+      if(collision_under(p->characters[i], decorArray[j])){
+        p->characters[i]->pos.y = decorArray[j]->y + decorArray[j]->height;
         p->characters[i]->grounded = 1;
         //p->characters[i]->model->width += 0.3; //debug
         if(!p->characters[i]->jumping){
