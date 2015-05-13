@@ -21,10 +21,10 @@ void rectangle_draw(Rectangle* rect, int filled){
     dessinCarre(filled);
   glPopMatrix();
   
-  glColor3ub(255,0,0);
-  dessinPoint(rect->x, rect->y);
-  glColor3ub(0,0,255);
-  dessinPoint(rect->x, rect->y + rect->height);
+//  glColor3ub(255,0,0);
+//  dessinPoint(rect->x, rect->y);
+//  glColor3ub(0,0,255);
+//  dessinPoint(rect->x, rect->y + rect->height);
   glColor3ub(255,255,255);
 }
 

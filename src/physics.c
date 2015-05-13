@@ -7,7 +7,7 @@ int rectangle_collision(Rectangle* r1, Rectangle* r2){
     et si le x du coin haut droit de r2 est après le x du coin haut gauche de r2
     pareil pour le y
   */
-  if (r1->x < r2->x + r2->width && r1->x + r1->width > r2->x && r1->y < r2->y + r2->height && r1->height + r1->y > r2->y) { 
+  if (r1->x < r2->x + r2->width && r1->x + r1->width > r2->x && r1->y < r2->y + r2->height && r1->height + r1->y > r2->y) {
     //il y a collision
     return 1;
   } else {
@@ -34,6 +34,7 @@ void characterMovement(Player *p, int currentChr){
   }
 
   if(chr->chrAbove != -1){
+    printf("Passage du mouvement de %d a %d", currentChr, chr->chrAbove);
     characterMovement(p, chr->chrAbove);
   }
 }
@@ -73,6 +74,7 @@ void moveChrWithDecorCollision(Player* p, Rectangle** decorArray, int size){
           p->characters[i]->speed.x = 0;
         }
       }
+
       if(collision_under(p->characters[i], decorArray[j])){
         p->characters[i]->pos.y = decorArray[j]->y + decorArray[j]->height;
         p->characters[i]->grounded = 1;
@@ -101,14 +103,16 @@ void chrCollision(Player* p){
     for (j = 0; j < p->n; ++j)
     {
       if(i != j){
-        if(collision_above(p->characters[i], p->characters[j]->model)){
-          p->characters[i]->pos.y = p->characters[j]->model->y - p->characters[i]->model->height;
-          p->characters[i]->speed.y = 0;
+
+        /*if(collision_above(p->characters[i], p->characters[j]->model)){
+          printf("Collision chr above : %d under %d\n", i, j);
+          //p->characters[i]->pos.y = p->characters[j]->model->y - p->characters[i]->model->height;
+          //p->characters[i]->speed.y = 0;
           p->characters[i]->chrAbove = j;
         }
         else{
           p->characters[i]->chrAbove = -1;
-        }
+        }*/
 
         sideCollision = collision_sides(p->characters[i], p->characters[j]->model);
         if(sideCollision){
@@ -123,6 +127,8 @@ void chrCollision(Player* p){
           }
         }
         if(collision_under(p->characters[i], p->characters[j]->model)){
+          printf("Collision chr under : %d on %d\n", i, j);
+          p->characters[j]->chrAbove = i;
           p->characters[i]->pos.y = p->characters[j]->model->y + p->characters[j]->model->height;
           p->characters[i]->grounded = 1;
           //p->characters[i]->model->width += 0.3; //debug
@@ -132,6 +138,10 @@ void chrCollision(Player* p){
           else {
             p->characters[i]->jumping = 0;
           }
+        }
+        else{
+          p->characters[j]->chrAbove = -1;
+          printf("pas collision under\n");
         }
       }
 
@@ -166,7 +176,7 @@ int collision_sides(Character* chr, Rectangle* bg){
 }
 
 int collision_under(Character* chr, Rectangle* bg){
-	if(chr->model->y >= bg->y + bg->height - 10 && rectangle_collision(chr->model, bg)){
+  if(chr->model->y >= bg->y + bg->height - 10 && rectangle_collision(chr->model, bg)){
     return 1;
 	}
   else {

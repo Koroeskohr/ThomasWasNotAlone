@@ -66,8 +66,9 @@ int main(int argc, char** argv) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     applyGravity(player);
-    moveChrWithDecorCollision(player, decorArray, 2);
     chrCollision(player);
+    moveChrWithDecorCollision(player, decorArray, 2);
+
     characterMovement(player, currentChr);
 
 
