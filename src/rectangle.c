@@ -6,6 +6,8 @@ Rectangle* rectangle_new(float x, float y, int width, int height){
   r->height = height;
   r->x = x;
   r->y = y;
+
+  r->textureId = -1;
   return r;
 }
 
@@ -31,4 +33,40 @@ void rectangle_draw(Rectangle* rect, int filled){
 Rectangle** rectangle_generateArray(int n){
   Rectangle** array = (Rectangle**)malloc(n*sizeof(Rectangle*));
   return array;
+}
+
+void rectangle_bindTexture(Rectangle* rect, char* textureRelPath){
+  SDL_Surface* texture = IMG_Load(textureRelPath);
+  if(image == NULL){
+    fprintf(stderr, "Failed loading img %s\n", textureRelPath);
+    return EXIT_FAILURE;
+  }
+
+  glGenTextures(1, &rect->textureId);
+  glBindTexture(GL_TEXTURE_2D, rect->textureId);
+
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+  GLenum format;
+  switch(texture->format->BytesPerPixel){
+    case 1:
+      format = GL_RED;
+      break;
+
+    case 3:
+      format = GL_RGB;
+      break;
+
+    case 4:
+      format = GL_RGBA;
+      break;
+
+    default:
+      fprintf(stderr, "Couldnt handle image format");
+      return EXIT_FAILURE;
+  }
+
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture->w, texture->h, 0, format, GL_UNSIGNED_BYTE, texture->pixels);
+  glBindTexture(GL_TEXTURE_2D, 0);
+  SDL_FreeSurface(texture);
 }
