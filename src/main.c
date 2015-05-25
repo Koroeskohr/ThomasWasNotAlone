@@ -48,7 +48,6 @@ int main(int argc, char** argv) {
 
   int loop = 1;
   while(loop) {
-
     /* temps au début de la boucle */
     Uint32 startTime = SDL_GetTicks();
 

@@ -22,7 +22,7 @@ void rectangle_draw(Rectangle* rect, int filled){
   glPushMatrix();
     glTranslatef(rect->x, rect->y, 0);
     glScalef(rect->width, rect->height, 1);
-    if(rect->textureId <= 0){
+    if(rect->textureId <= 0 ){
       dessinCarre(filled);      
     }
     else {
