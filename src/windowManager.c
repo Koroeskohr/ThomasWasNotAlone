@@ -19,7 +19,7 @@ void setVideoMode(int winWidth, int winHeight, const int BIT_PER_PIXEL) {
 
 void initWindow(int windowWidth, int windowHeight, const int BIT_PER_PIXEL){
   if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
-    fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
+    fprintf(stderr, "Impossible d'initialiser la SDL : %s\n", SDL_GetError());
     exit(EXIT_FAILURE);
   }
    

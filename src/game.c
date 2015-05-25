@@ -35,6 +35,18 @@ int initLevel(GameData* gameData, int level){
 }
 
 
+void initMenu(MenuData* menuData){
+    menuData->titre = rectangle_new(-250, 78, 500, 78);
+    rectangle_bindTexture(menuData->titre, "1.jpg");
+    menuData->niveaux[0] = rectangle_new(-250, 0, 500, 78);
+    rectangle_bindTexture(menuData->niveaux[0], "2.png");
+    menuData->niveaux[1] = rectangle_new(-250, -78, 500, 78);
+    rectangle_bindTexture(menuData->niveaux[1], "1.jpg");
+    menuData->niveaux[2] = rectangle_new(-250, -156, 500, 78);
+    rectangle_bindTexture(menuData->niveaux[2], "1.png");
+}
+
+
 GameData gameData_decode(char* level){
   GameData g;
 
@@ -123,4 +135,13 @@ void processGame(GameData gameData){
     if(isGameWon(gameData.player, gameData.goalArray)){
       gameData.player->characters[0]->model->width = 200;
     }
+}
+
+void processMenu(MenuData menuData){
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    rectangle_draw(menuData.titre, PRIM_FILLED);
+    rectangle_draw(menuData.niveaux[0], PRIM_FILLED);
+    rectangle_draw(menuData.niveaux[1], PRIM_FILLED);
+    rectangle_draw(menuData.niveaux[2], PRIM_FILLED);
 }

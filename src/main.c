@@ -28,6 +28,9 @@ int main(int argc, char** argv) {
   GameData gameData;
   initLevel(&gameData, 1);
 
+  MenuData menuData;
+  initMenu(&menuData);
+
 //  rectangle_bindTexture(gameData.decorArray[0], "1.jpg"); // TODO
 
   int loop = 1;
@@ -42,15 +45,17 @@ int main(int argc, char** argv) {
 
     switch(gameState){
         case menu:
-            processMenu();
+            processMenu(menuData);
             break;
 
         case inGame:
             processGame(gameData);
             break;
+
         case gameEnd:
 
             break;
+
         default:
             break;
     }

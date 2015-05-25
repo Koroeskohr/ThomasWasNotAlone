@@ -4,6 +4,7 @@
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <string.h>
 
 
 void reshape(int winWidth, int winHeight);

@@ -21,17 +21,24 @@ typedef struct gameData
   int currentChr;
 } GameData;
 
+typedef struct menuData
+{
+    Rectangle* titre;
+    Rectangle* niveaux[3];
+} MenuData;
+
 typedef enum  {menu = 0, inGame = 1, gameEnd = 2} GAMESTATE;
 
 int isGameWon(Player* p, Goal** goalArray);
 void nextCharacter(Player* p, int* currentChr, int nb_chrs);
 
 int initLevel(GameData* gameData, int level);
+void initMenu(MenuData*);
 
 GameData gameData_decode();
 
 void processGame(GameData gameData);
-
+void processMenu();
 
 
 #endif
