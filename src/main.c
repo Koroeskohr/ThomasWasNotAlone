@@ -99,10 +99,10 @@ int main(int argc, char** argv) {
      */
     Uint8* keystate = SDL_GetKeyState(NULL);
 
-    if(keystate[SDLK_LEFT]){
+    if(keystate[SDLK_LEFT] || keystate[SDLK_q]){
       player->characters[currentChr]->acc.x = -0.1;
     }
-    if(keystate[SDLK_RIGHT]){
+    if(keystate[SDLK_RIGHT] || keystate[SDLK_d]){
       player->characters[currentChr]->acc.x = 0.1;
     }
 
@@ -122,7 +122,7 @@ int main(int argc, char** argv) {
           break;
 
         case SDL_KEYDOWN:
-          if(e.key.keysym.sym == SDLK_LSHIFT){
+          if(e.key.keysym.sym == SDLK_TAB){
             nextCharacter(player, &currentChr, nb_chrs);
           }
           if(e.key.keysym.sym == SDLK_SPACE){
@@ -131,7 +131,7 @@ int main(int argc, char** argv) {
         break;
 
         case SDL_KEYUP:
-          if(e.key.keysym.sym == SDLK_LEFT || e.key.keysym.sym == SDLK_RIGHT){
+          if(e.key.keysym.sym == SDLK_LEFT || e.key.keysym.sym == SDLK_RIGHT || e.key.keysym.sym == SDLK_q || e.key.keysym.sym == SDLK_d){
             player->characters[currentChr]->acc.x = 0;
             player->characters[currentChr]->speed.x = 0;
           }
