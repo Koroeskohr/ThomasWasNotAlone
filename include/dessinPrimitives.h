@@ -14,6 +14,7 @@ typedef struct Color3f {
 } Color3f;
 
 void dessinCarre(short filled);
+void dessinCarreAvecTexture();
 void dessinRepere();
 void dessinCercle(short nbSubdiv, short filled);
 void dessinPoint(float x, float y);

@@ -7,6 +7,8 @@
 #include <GL/glu.h>
 #include <math.h>
 #include "dessinPrimitives.h"
+#include <string.h>
+#include <stdlib.h>
 
 typedef struct rectangle
 {
@@ -23,7 +25,7 @@ Rectangle* rectangle_new(float x, float y, int width, int height);
 Rectangle** rectangle_generateArray(int n);
 void rectangle_draw(Rectangle* rect, int filled);
 
-void rectangle_bindTexture(Rectangle* rect, char* textureRelPath);
+int rectangle_bindTexture(Rectangle* rect, char* textureRelPath);
 
 
 

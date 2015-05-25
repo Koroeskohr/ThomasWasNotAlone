@@ -127,7 +127,7 @@ void chrCollision(Player* p){
           }
         }
         if(collision_under(p->characters[i], p->characters[j]->model)){
-          printf("Collision chr under : %d on %d\n", i, j);
+          //printf("Collision chr under : %d on %d\n", i, j);
           p->characters[j]->chrAbove = i;
           p->characters[i]->pos.y = p->characters[j]->model->y + p->characters[j]->model->height;
           p->characters[i]->grounded = 1;
@@ -141,7 +141,7 @@ void chrCollision(Player* p){
         }
         else{
           p->characters[j]->chrAbove = -1;
-          printf("pas collision under\n");
+          //printf("pas collision under\n");
         }
       }
 

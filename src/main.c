@@ -23,29 +23,26 @@ int main(int argc, char** argv) {
 
   initWindow(windowWidth, windowHeight, BIT_PER_PIXEL);
   glPointSize(5); //debug
-
   int i;
-
   /* Initialisation du jeu */
   GameData gameData = gameData_decode("level1.lvl");
 
   int nb_chrs = gameData.chrAmount;
   int nb_decor = gameData.decorAmount;
   Player* player = player_new(nb_chrs); //to free
-
   //init des characters
   player->characters = gameData.chrArray; // to free
 
   //définition du character actuel
   int currentChr = 0;
-
   //init des Goal
   Goal** goalArray = gameData.goalArray; //to free
 
   //init du tableau des décors tangibles
   Rectangle** decorArray = gameData.decorArray; //to free
-
-
+  printf("Juste avant bind\n");
+  rectangle_bindTexture(decorArray[0], "1.jpg");
+  printf("Juste apres bind\n");
 
   /* Fin de l'initialisation du jeu */
 
