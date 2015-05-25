@@ -11,7 +11,6 @@
 #include "goal.h"
 #include "game.h"
 #include "camera.h"
-#include "file.h"
 
 
 int main(int argc, char** argv) {
@@ -23,28 +22,13 @@ int main(int argc, char** argv) {
 
   initWindow(windowWidth, windowHeight, BIT_PER_PIXEL);
   glPointSize(5); //debug
-  int i;
-  /* Initialisation du jeu */
-  GameData gameData = gameData_decode("level1.lvl");
 
-  int nb_chrs = gameData.chrAmount;
-  int nb_decor = gameData.decorAmount;
-  Player* player = player_new(nb_chrs); //to free
-  //init des characters
-  player->characters = gameData.chrArray; // to free
+  GAMESTATE gameState = menu;
 
-  //définition du character actuel
-  int currentChr = 0;
-  //init des Goal
-  Goal** goalArray = gameData.goalArray; //to free
+  GameData gameData;
+  initLevel(&gameData, 1);
 
-  //init du tableau des décors tangibles
-  Rectangle** decorArray = gameData.decorArray; //to free
-  printf("Juste avant bind\n");
-  rectangle_bindTexture(decorArray[0], "1.jpg");
-  printf("Juste apres bind\n");
-
-  /* Fin de l'initialisation du jeu */
+//  rectangle_bindTexture(gameData.decorArray[0], "1.jpg"); // TODO
 
   int loop = 1;
   while(loop) {
@@ -54,39 +38,23 @@ int main(int argc, char** argv) {
     ///////////////////////////////////////////////////
     //                    DESSIN                     //
     ///////////////////////////////////////////////////
-    
     glClear(GL_COLOR_BUFFER_BIT);
 
-    setCamera(player->characters[currentChr]->pos);
+    switch(gameState){
+        case menu:
+            processMenu();
+            break;
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    applyGravity(player);
-    chrCollision(player);
-    moveChrWithDecorCollision(player, decorArray, 2);
+        case inGame:
+            processGame(gameData);
+            break;
+        case gameEnd:
 
-    characterMovement(player, currentChr);
-
-
-
-    //printf("pos x %f y %f speed x %f y %f\n", player->characters[currentChr]->pos.x,player->characters[currentChr]->pos.y, player->characters[currentChr]->speed.x,player->characters[currentChr]->speed.y);
-    glColor3ub(255,255,255);
-    for(i=0; i < nb_decor; ++i){
-      rectangle_draw(decorArray[i], PRIM_FILLED); //rajouter une délégation pour le décor ?
+            break;
+        default:
+            break;
     }
 
-    for(i=0; i < nb_chrs; ++i){
-      character_draw(player->characters[i], i);
-    }
-
-    glColor3ub(255,255,255);
-    for(i = 0; i < nb_chrs; ++i){
-      goal_draw(goalArray[i]);
-    }
-    
-    if(isGameWon(player, goalArray)){
-      player->characters[0]->model->width = 200;
-    }
 
     SDL_GL_SwapBuffers();
     ///////////////////////////////////////////////////
@@ -100,10 +68,10 @@ int main(int argc, char** argv) {
     Uint8* keystate = SDL_GetKeyState(NULL);
 
     if(keystate[SDLK_LEFT] || keystate[SDLK_q]){
-      player->characters[currentChr]->acc.x = -0.1;
+      gameData.player->characters[gameData.currentChr]->acc.x = -0.1;
     }
     if(keystate[SDLK_RIGHT] || keystate[SDLK_d]){
-      player->characters[currentChr]->acc.x = 0.1;
+      gameData.player->characters[gameData.currentChr]->acc.x = 0.1;
     }
 
 
@@ -123,17 +91,17 @@ int main(int argc, char** argv) {
 
         case SDL_KEYDOWN:
           if(e.key.keysym.sym == SDLK_TAB){
-            nextCharacter(player, &currentChr, nb_chrs);
+            nextCharacter(gameData.player, &gameData.currentChr, gameData.chrAmount);
           }
           if(e.key.keysym.sym == SDLK_SPACE){
-            jump(player->characters[currentChr]);
+            jump(gameData.player->characters[gameData.currentChr]);
           }
         break;
 
         case SDL_KEYUP:
           if(e.key.keysym.sym == SDLK_LEFT || e.key.keysym.sym == SDLK_RIGHT || e.key.keysym.sym == SDLK_q || e.key.keysym.sym == SDLK_d){
-            player->characters[currentChr]->acc.x = 0;
-            player->characters[currentChr]->speed.x = 0;
+            gameData.player->characters[gameData.currentChr]->acc.x = 0;
+            gameData.player->characters[gameData.currentChr]->speed.x = 0;
           }
           break;
 
