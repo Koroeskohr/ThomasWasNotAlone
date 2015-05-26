@@ -43,7 +43,7 @@ void jump(Character* chr){
   //saut proportionnel à la taille du personnage ???
   if(!chr->jumping) {
     chr->jumping = 1;
-    chr->speed.y = 4;
+    chr->speed.y = chr->model->height*0.1+2.1;
   }
 
 }

@@ -7,7 +7,7 @@
 #include "player.h"
 #include "vector.h"
 
-#define MAX_SPEED 4
+#define MAX_SPEED 6
 
 int rectangle_collision(Rectangle* r1, Rectangle* r2);
 void applyGravity(Player* p);
