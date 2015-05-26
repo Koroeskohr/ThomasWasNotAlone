@@ -10,6 +10,9 @@
 #include "player.h"
 #include "camera.h"
 #include "windowManager.h"
+#include <SDL/SDL_mixer.h>
+#include "sound.h"
+#include <string.h>
 
 
 
@@ -20,6 +23,7 @@ typedef struct gameData
   Character** chrArray;
   Goal** goalArray;
   Rectangle** decorArray;
+  Mix_Music* music;
   Player* player;
   int currentChr;
 } GameData;

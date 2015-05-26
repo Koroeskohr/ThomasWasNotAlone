@@ -16,6 +16,7 @@ void initGame(Game* game){
     game->gameEndScreen = rectangle_new(-250,-156,500,312);
     rectangle_bindTexture(game->gameEndScreen, "1.jpg");
 
+    initAudio();
 }
 
 int isGameWon(Player* p, Goal** goalArray){
@@ -48,6 +49,7 @@ int initLevel(GameData* gameData, int level){
     gameData->player->characters = gameData->chrArray;
 
     gameData->currentChr = 0;
+    Mix_PlayMusic(gameData->music,-1);
 
     return EXIT_SUCCESS;
 }
@@ -76,13 +78,14 @@ GameData gameData_decode(char* level){
 
   savefile = fopen(level,"r");
   if(savefile == NULL){
-    fprintf(stderr, "Cant open file\n");
+    fprintf(stderr, "Cant open file %s\n", level);
     exit(1);
   }
 
   int i;
   int decorAmount, chrAmount;
   float x, y, width, height;
+  char musicPath[200];
 
   fscanf(savefile, "%d %d", &decorAmount, &chrAmount);
 
@@ -110,15 +113,15 @@ GameData gameData_decode(char* level){
     fscanf(savefile, "%f %f %f %f", &x, &y, &width, &height);
     goalArray[i] = goal_new(x, y, width, height);
     printf("goal %d : x %f y %f wd %f he %f \n", i, x,y,width,height);
-
   }
+
+  fscanf(savefile, "%s", musicPath);
+  g.music = loadMusic(musicPath);
 
   g.chrArray = chrArray;
   g.goalArray = goalArray;
   g.decorArray = decorArray;
-
   fclose(savefile);
-
   return g;
 }
 
@@ -138,7 +141,7 @@ void processGame(Game* game){
     //printf("pos x %f y %f speed x %f y %f\n", gameData.player->characters[gameData.currentChr]->pos.x,gameData.player->characters[gameData.currentChr]->pos.y, gameData.player->characters[gameData.currentChr]->speed.x,gameData.player->characters[gameData.currentChr]->speed.y);
     glColor3ub(255,255,255);
     for(i=0; i < game->gameData.decorAmount; ++i){
-      rectangle_draw(game->gameData.decorArray[i], PRIM_FILLED); //rajouter une délégation pour le décor ?
+      rectangle_draw(game->gameData.decorArray[i], PRIM_FILLED);
     }
 
     glColor3ub(255,255,255);
@@ -163,6 +166,8 @@ void processMenu(MenuData menuData){
     gluOrtho2D(-250., 250., -250./1.6, 250./1.6);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+
+
     rectangle_draw(menuData.titre, PRIM_FILLED);
     rectangle_draw(menuData.niveaux[0], PRIM_FILLED);
     rectangle_draw(menuData.niveaux[1], PRIM_FILLED);
@@ -180,6 +185,7 @@ void processGameEnd(Game* game)
     glLoadIdentity();
     rectangle_draw(game->gameEndScreen, PRIM_FILLED);
     if(SDL_GetTicks() - game->winTime > 5000){
+        Mix_CloseAudio();
         game->gameState = menu;
     }
 }

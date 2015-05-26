@@ -1,4 +1,5 @@
 #include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <stdlib.h>
@@ -12,6 +13,7 @@
 #include "game.h"
 #include "camera.h"
 #include "input.h"
+#include "sound.h"
 
 
 int main(int argc, char** argv) {
@@ -19,10 +21,7 @@ int main(int argc, char** argv) {
   Game game;
   initGame(&game);
 
-  glPointSize(5); //debug
 
-  GameData gameData;
-  initLevel(&gameData, 1);
 
 //  rectangle_bindTexture(gameData.decorArray[0], "1.jpg"); // TODO
 
@@ -90,6 +89,7 @@ int main(int argc, char** argv) {
     }
   }
   
+  closeAudio();
   SDL_Quit();
   
   return EXIT_SUCCESS;
