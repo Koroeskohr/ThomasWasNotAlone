@@ -9,6 +9,9 @@
 #include "goal.h"
 #include "player.h"
 #include "camera.h"
+#include "windowManager.h"
+
+
 
 typedef struct gameData
 {
@@ -29,6 +32,18 @@ typedef struct menuData
 
 typedef enum  {menu = 0, inGame = 1, gameEnd = 2} GAMESTATE;
 
+typedef struct game {
+    GameData gameData;
+    MenuData menuData;
+    WindowParams windowParams;
+    int loop;
+    GAMESTATE gameState;
+    Rectangle* gameEndScreen;
+    Uint32 winTime;
+} Game;
+
+void initGame(Game* game);
+
 int isGameWon(Player* p, Goal** goalArray);
 void nextCharacter(Player* p, int* currentChr, int nb_chrs);
 
@@ -37,8 +52,9 @@ void initMenu(MenuData*);
 
 GameData gameData_decode();
 
-void processGame(GameData gameData);
+void processGame(Game *game);
 void processMenu();
+void processGameEnd(Game *game);
 
 
 #endif

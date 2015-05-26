@@ -20,6 +20,7 @@ typedef struct rectangle
 
 Rectangle* rectangle_new(float x, float y, int width, int height);
 
+int isPointInRectangle(float x, float y, Rectangle* rect);
 
 
 Rectangle** rectangle_generateArray(int n);

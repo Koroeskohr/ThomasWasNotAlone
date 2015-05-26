@@ -1,5 +1,23 @@
 #include "game.h"
 
+
+void initGame(Game* game){
+    game->loop = 1;
+    game->gameState = menu;
+
+    game->windowParams.BIT_PER_PIXEL = 32;
+    game->windowParams.windowWidth = 1280;
+    game->windowParams.windowHeight = 720;
+    game->windowParams.FRAMERATE_MILLISECONDS = 1000 / 60;
+
+    initWindow(game->windowParams.windowWidth, game->windowParams.windowHeight, game->windowParams.BIT_PER_PIXEL);
+
+    initMenu(&game->menuData);
+    game->gameEndScreen = rectangle_new(-250,-156,500,312);
+    rectangle_bindTexture(game->gameEndScreen, "1.jpg");
+
+}
+
 int isGameWon(Player* p, Goal** goalArray){
   int i;
   int won = 1;
@@ -105,43 +123,63 @@ GameData gameData_decode(char* level){
 }
 
 
-void processGame(GameData gameData){
+void processGame(Game* game){
     int i;
 
-    setCamera(gameData.player->characters[gameData.currentChr]->pos);
+    setCamera(game->gameData.player->characters[game->gameData.currentChr]->pos);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    applyGravity(gameData.player);
-    chrCollision(gameData.player);
-    moveChrWithDecorCollision(gameData.player, gameData.decorArray, 2);
+    applyGravity(game->gameData.player);
+    chrCollision(game->gameData.player);
+    moveChrWithDecorCollision(game->gameData.player, game->gameData.decorArray, 2);
 
-    characterMovement(gameData.player, gameData.currentChr);
+    characterMovement(game->gameData.player, game->gameData.currentChr);
     //printf("pos x %f y %f speed x %f y %f\n", gameData.player->characters[gameData.currentChr]->pos.x,gameData.player->characters[gameData.currentChr]->pos.y, gameData.player->characters[gameData.currentChr]->speed.x,gameData.player->characters[gameData.currentChr]->speed.y);
     glColor3ub(255,255,255);
-    for(i=0; i < gameData.decorAmount; ++i){
-      rectangle_draw(gameData.decorArray[i], PRIM_FILLED); //rajouter une délégation pour le décor ?
-    }
-
-    for(i=0; i < gameData.chrAmount; ++i){
-      character_draw(gameData.player->characters[i], i);
+    for(i=0; i < game->gameData.decorAmount; ++i){
+      rectangle_draw(game->gameData.decorArray[i], PRIM_FILLED); //rajouter une délégation pour le décor ?
     }
 
     glColor3ub(255,255,255);
-    for(i = 0; i < gameData.chrAmount; ++i){
-      goal_draw(gameData.goalArray[i]);
+    for(i = 0; i < game->gameData.chrAmount; ++i){
+      goal_draw(game->gameData.goalArray[i]);
     }
 
-    if(isGameWon(gameData.player, gameData.goalArray)){
-      gameData.player->characters[0]->model->width = 200;
+    for(i=0; i < game->gameData.chrAmount; ++i){
+      character_draw(game->gameData.player->characters[i], i);
+    }
+
+    if(isGameWon(game->gameData.player, game->gameData.goalArray)){
+      game->gameState = gameEnd;
+      game->winTime = SDL_GetTicks();
     }
 }
 
 void processMenu(MenuData menuData){
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    gluOrtho2D(-250., 250., -250./1.6, 250./1.6);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     rectangle_draw(menuData.titre, PRIM_FILLED);
     rectangle_draw(menuData.niveaux[0], PRIM_FILLED);
     rectangle_draw(menuData.niveaux[1], PRIM_FILLED);
     rectangle_draw(menuData.niveaux[2], PRIM_FILLED);
+}
+
+
+void processGameEnd(Game* game)
+{
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+
+    gluOrtho2D(-250., 250., -250./1.6, 250./1.6);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    rectangle_draw(game->gameEndScreen, PRIM_FILLED);
+    if(SDL_GetTicks() - game->winTime > 5000){
+        game->gameState = menu;
+    }
 }

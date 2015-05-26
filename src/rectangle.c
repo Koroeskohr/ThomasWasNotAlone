@@ -16,9 +16,11 @@ void rectangle_free(Rectangle* rect){
   rect = NULL;
 }
 
+int isPointInRectangle(float x, float y, Rectangle* rect){
+    return (rect->x < x && rect->x + rect->width > x) && (rect->y < y && rect->y + rect->height > y);
+}
+
 void rectangle_draw(Rectangle* rect, int filled){
-
-
   glPushMatrix();
     glTranslatef(rect->x, rect->y, 0);
     glScalef(rect->width, rect->height, 1);
