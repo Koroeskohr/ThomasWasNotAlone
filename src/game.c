@@ -14,7 +14,7 @@ void initGame(Game* game){
 
     initMenu(&game->menuData);
     game->gameEndScreen = rectangle_new(-250,-156,500,312);
-    rectangle_bindTexture(game->gameEndScreen, "1.jpg");
+    rectangle_bindTexture(game->gameEndScreen, "level_complete.png");
 
     initAudio();
 }
