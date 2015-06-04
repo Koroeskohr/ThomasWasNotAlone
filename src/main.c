@@ -21,10 +21,6 @@ int main(int argc, char** argv) {
   Game game;
   initGame(&game);
 
-
-
-//  rectangle_bindTexture(gameData.decorArray[0], "1.jpg"); // TODO
-
   while(game.loop) {
     Uint32 startTime = SDL_GetTicks();
 
@@ -89,7 +85,8 @@ int main(int argc, char** argv) {
     }
   }
   
-  closeAudio();
+
+  game_free(&game);
   SDL_Quit();
   
   return EXIT_SUCCESS;

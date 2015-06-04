@@ -35,4 +35,11 @@ void character_free(Character* chr){
   chr = NULL;
 }
 
+void chr_array_free(Character** chrArray, int amount){
+  int i;
+  for(i=0;i<amount;i++){
+    character_free(chrArray[i]);
+  }
+  free(chrArray);
+}
 

@@ -30,6 +30,7 @@ void character_draw(Character* chr, short colorId);
 Character** character_generateArray(int n);
 
 void character_free(Character* chr);
+void chr_array_free(Character** chrArray, int amount);
 
 extern Color3f BLUE, RED, YELLOW, GREEN, LIGHTGREY;
 extern Color3f colors[5];

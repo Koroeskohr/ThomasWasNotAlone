@@ -43,6 +43,7 @@ void processInGameInput(GameData* gameData, SDL_Event* e){
         if(e->key.keysym.sym == SDLK_SPACE){
           jump(gameData->player->characters[gameData->currentChr]);
         }
+
       break;
 
       case SDL_KEYUP:

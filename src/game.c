@@ -19,6 +19,36 @@ void initGame(Game* game){
     initAudio();
 }
 
+void game_free(Game* game){
+  gameData_free(&game->gameData);
+  menuData_free(&game->menuData);
+
+  free(game);
+}
+
+void gameData_free(GameData* gameData){
+  chr_array_free(gameData->chrArray, gameData->chrAmount);
+  printf("1\n");
+  rectangle_array_free(gameData->decorArray, gameData->decorAmount);
+  printf("1\n");
+
+  goal_array_free(gameData->goalArray, gameData->chrAmount);
+  printf("1\n");
+
+
+  freeMusic(gameData->music);
+  printf("1\n");
+
+
+}
+
+void menuData_free(MenuData* menuData){
+  rectangle_free(menuData->titre);
+  rectangle_free(menuData->niveaux[0]);
+  rectangle_free(menuData->niveaux[1]);
+  rectangle_free(menuData->niveaux[2]);
+}
+
 int isGameWon(Player* p, Goal** goalArray){
   int i;
   int won = 1;
@@ -137,7 +167,7 @@ void processGame(Game* game){
     glLoadIdentity();
     applyGravity(game->gameData.player);
     chrCollision(game->gameData.player);
-    moveChrWithDecorCollision(game->gameData.player, game->gameData.decorArray, 2);
+    moveChrWithDecorCollision(game->gameData.player, game->gameData.decorArray, game->gameData.decorAmount);
 
     characterMovement(game->gameData.player, game->gameData.currentChr);
     //printf("pos x %f y %f speed x %f y %f\n", gameData.player->characters[gameData.currentChr]->pos.x,gameData.player->characters[gameData.currentChr]->pos.y, gameData.player->characters[gameData.currentChr]->speed.x,gameData.player->characters[gameData.currentChr]->speed.y);

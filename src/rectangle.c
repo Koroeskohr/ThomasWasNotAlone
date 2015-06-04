@@ -16,6 +16,14 @@ void rectangle_free(Rectangle* rect){
   rect = NULL;
 }
 
+void rectangle_array_free(Rectangle** rectArray, int amount){
+  int i;
+  for(i = 0; i < amount; ++i){
+    rectangle_free(rectArray[i]);
+  }
+  free(rectArray);
+}
+
 int isPointInRectangle(float x, float y, Rectangle* rect){
     return (rect->x < x && rect->x + rect->width > x) && (rect->y < y && rect->y + rect->height > y);
 }

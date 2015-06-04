@@ -47,6 +47,9 @@ typedef struct game {
 } Game;
 
 void initGame(Game* game);
+void game_free(Game* game);
+void gameData_free(GameData* gameData);
+void menuData_free(MenuData* menuData);
 
 int isGameWon(Player* p, Goal** goalArray);
 void nextCharacter(Player* p, int* currentChr, int nb_chrs);

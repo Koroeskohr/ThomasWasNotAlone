@@ -25,3 +25,13 @@ void goal_free(Goal* goal){
   free(goal);
   goal = NULL;
 }
+
+void goal_array_free(Goal** goalArray, int amount){
+  int i;
+
+  for (i = 0; i < amount; ++i) {
+    goal_free(goalArray[i]);
+  }
+
+  free(goalArray);
+}

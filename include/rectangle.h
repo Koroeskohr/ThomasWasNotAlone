@@ -31,5 +31,6 @@ int rectangle_bindTexture(Rectangle* rect, char* textureRelPath);
 
 
 void rectangle_free(Rectangle* rect);
+void rectangle_array_free(Rectangle** rectArray, int amount);
 
 #endif

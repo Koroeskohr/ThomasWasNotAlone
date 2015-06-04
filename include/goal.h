@@ -17,5 +17,6 @@ void goal_draw(Goal* goal);
 Goal** goal_generateArray(int n);
 
 void goal_free(Goal* goal);
+void goal_array_free(Goal** goalArray, int amount);
 
 #endif
