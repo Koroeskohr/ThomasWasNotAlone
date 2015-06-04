@@ -86,6 +86,7 @@ GameData gameData_decode(char* level){
   int decorAmount, chrAmount;
   float x, y, width, height;
   char musicPath[200];
+  char texturePath[200];
 
   fscanf(savefile, "%d %d", &decorAmount, &chrAmount);
 
@@ -97,8 +98,9 @@ GameData gameData_decode(char* level){
   goalArray = goal_generateArray(chrAmount);
 
   for(i = 0; i < decorAmount; ++i) {
-    fscanf(savefile, "%f %f %f %f", &x, &y, &width, &height);
+    fscanf(savefile, "%f %f %f %f %s", &x, &y, &width, &height, texturePath);
     decorArray[i] = rectangle_new(x, y, width, height);
+    rectangle_bindTexture(decorArray[i], texturePath);
     printf("decor %d : x %f y %f wd %f he %f \n", i, x,y,width,height);
   }
 
