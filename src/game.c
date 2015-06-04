@@ -79,6 +79,7 @@ int initLevel(GameData* gameData, int level){
     gameData->player->characters = gameData->chrArray;
 
     gameData->currentChr = 0;
+    initAudio();
     Mix_PlayMusic(gameData->music,-1);
 
     return EXIT_SUCCESS;
@@ -218,6 +219,7 @@ void processGameEnd(Game* game)
     rectangle_draw(game->gameEndScreen, PRIM_FILLED);
     if(SDL_GetTicks() - game->winTime > 5000){
         Mix_CloseAudio();
+        freeMusic(game->gameData.music);
         game->gameState = menu;
     }
 }
