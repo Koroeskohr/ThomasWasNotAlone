@@ -87,13 +87,13 @@ int initLevel(GameData* gameData, int level){
 
 void initMenu(MenuData* menuData){
     menuData->titre = rectangle_new(-250, 78, 500, 78);
-    rectangle_bindTexture(menuData->titre, "1.jpg");
+    rectangle_bindTexture(menuData->titre, "menu_1.png");
     menuData->niveaux[0] = rectangle_new(-250, 0, 500, 78);
-    rectangle_bindTexture(menuData->niveaux[0], "2.png");
+    rectangle_bindTexture(menuData->niveaux[0], "menu_2.png");
     menuData->niveaux[1] = rectangle_new(-250, -78, 500, 78);
-    rectangle_bindTexture(menuData->niveaux[1], "1.jpg");
+    rectangle_bindTexture(menuData->niveaux[1], "menu_3.png");
     menuData->niveaux[2] = rectangle_new(-250, -156, 500, 78);
-    rectangle_bindTexture(menuData->niveaux[2], "1.png");
+    rectangle_bindTexture(menuData->niveaux[2], "menu_4.png");
 }
 
 
