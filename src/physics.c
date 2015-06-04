@@ -20,8 +20,8 @@ void applyGravity(Player* p){
   for(i=0; i < p->n; i++){
     p->characters[i]->speed.y += p->characters[i]->acc.y;
     
-    if(fabs(p->characters[i]->speed.y) > MAX_SPEED){
-      p->characters[i]->speed.y = p->characters[i]->speed.y > 0 ? MAX_SPEED : -MAX_SPEED;
+    if(fabs(p->characters[i]->speed.y) > MAX_SPEED_Y){
+      p->characters[i]->speed.y = p->characters[i]->speed.y > 0 ? MAX_SPEED_Y : -MAX_SPEED_Y;
     }
   }
 }
@@ -29,8 +29,8 @@ void applyGravity(Player* p){
 void characterMovement(Player *p, int currentChr){
   Character* chr = p->characters[currentChr];
   chr->speed.x += chr->acc.x;
-  if(fabs(chr->speed.x) > MAX_SPEED){
-    chr->speed.x = chr->speed.x > 0 ? MAX_SPEED : -MAX_SPEED;
+  if(fabs(chr->speed.x) > MAX_SPEED_X){
+    chr->speed.x = chr->speed.x > 0 ? MAX_SPEED_X : -MAX_SPEED_X;
   }
 
   if(chr->chrAbove != -1){
